@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "136625140116",
+    "project_id": "estu-attendance-app",
+    "storage_bucket": "estu-attendance-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:136625140116:android:ddd7a2395c748f9b7a1f81",
+        "android_client_info": {
+          "package_name": "tr.edu.eskisehir.attendanceapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAlFtfHyfd4l6BCUM5K9al9fxLd7x_TUG8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
