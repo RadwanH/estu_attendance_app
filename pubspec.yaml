@@ -24,6 +24,7 @@ dependencies:
     path: packages/user_repository
   course_repository:
     path: packages/course_repository
+  font_awesome_flutter: ^10.7.0
 
 dev_dependencies:
   flutter_test:

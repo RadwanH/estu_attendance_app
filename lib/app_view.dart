@@ -1,4 +1,7 @@
+import 'package:course_repository/course_repository.dart';
 import 'package:estu_attendance_app/screens/auth/blocs/sign_in_bloc/sign_in_bloc.dart';
+import 'package:estu_attendance_app/screens/course/blocs/get_course_bloc/get_course_bloc.dart';
+import 'package:estu_attendance_app/screens/course/views/courses_grid_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -23,15 +26,23 @@ class MyAppView extends StatelessWidget {
       home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
         builder: (context, state) {
           if (state.status == AuthenticationStatus.authenticated) {
-            return BlocProvider(
-              create: (context) =>
-                  SignInBloc(context.read<AuthenticationBloc>().userRepository),
-              child: HomeScreen(),
+            return MultiBlocProvider(
+              providers: [
+                BlocProvider(
+                  create: (context) => SignInBloc(
+                      context.read<AuthenticationBloc>().userRepository),
+                ),
+                BlocProvider(
+                  create: (context) => GetCourseBloc(FirebaseCourseRepo())
+                    ..add(
+                      GetCourse(),
+                    ),
+                ),
+              ],
+              child: const CoursesGridScreen(),
             );
-            print('Authenticated');
           } else {
             return WelcomeScreen();
-            print('Not Authenticated');
           }
         },
       ),

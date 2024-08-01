@@ -1,10 +1,12 @@
+import 'package:course_repository/course_repository.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'course_weeks_grid_screen.dart';
 
 class CourseDetailsScreen extends StatelessWidget {
-  const CourseDetailsScreen({Key? key}) : super(key: key);
+  final Course course;
+  const CourseDetailsScreen(this.course, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,9 +23,11 @@ class CourseDetailsScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
-          const Expanded(
+          Expanded(
             flex: 1,
-            child: _TopPortion(),
+            child: _TopPortion(
+              courseImg: course.imageUrl,
+            ),
           ),
           Expanded(
             flex: 4,
@@ -31,12 +35,12 @@ class CourseDetailsScreen extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 children: [
-                  const Padding(
+                  Padding(
                     padding: EdgeInsets.symmetric(horizontal: 8.0),
                     child: Text(
                       textAlign: TextAlign.center,
-                      "Mobile Programming and design",
-                      style: TextStyle(
+                      course.name,
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 30,
                       ),
@@ -53,14 +57,14 @@ class CourseDetailsScreen extends StatelessWidget {
                             color: Colors.green.withOpacity(0.3),
                             borderRadius: BorderRadius.circular(30),
                           ),
-                          child: const Padding(
-                            padding: EdgeInsets.symmetric(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
                               horizontal: 8,
                               vertical: 4,
                             ),
                             child: Text(
-                              '#BIM203',
-                              style: TextStyle(
+                              '#${course.code}',
+                              style: const TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20,
@@ -75,14 +79,36 @@ class CourseDetailsScreen extends StatelessWidget {
                             color: Colors.yellow.withOpacity(0.3),
                             borderRadius: BorderRadius.circular(30),
                           ),
-                          child: const Padding(
-                            padding: EdgeInsets.symmetric(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
                               horizontal: 8,
                               vertical: 4,
                             ),
                             child: Text(
-                              '#Classroom',
-                              style: TextStyle(
+                              '🏛️ ${course.classroom}',
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Container(
+                          margin: const EdgeInsets.only(bottom: 6),
+                          decoration: BoxDecoration(
+                            color: Colors.yellow.withOpacity(0.3),
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 4,
+                            ),
+                            child: Text(
+                              '📅 ${course.weeks} Weeks',
+                              style: const TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20,
@@ -96,14 +122,14 @@ class CourseDetailsScreen extends StatelessWidget {
                             color: Colors.red,
                             borderRadius: BorderRadius.circular(30),
                           ),
-                          child: const Padding(
-                            padding: EdgeInsets.symmetric(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
                               horizontal: 8,
                               vertical: 4,
                             ),
                             child: Text(
-                              '⏳ 3 H/W',
-                              style: TextStyle(
+                              '🕒 ${course.hours} Hrs/Week',
+                              style: const TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20,
@@ -221,7 +247,8 @@ class CourseDetailsScreen extends StatelessWidget {
 }
 
 class _TopPortion extends StatelessWidget {
-  const _TopPortion({Key? key}) : super(key: key);
+  final String courseImg;
+  const _TopPortion({super.key, required this.courseImg});
 
   @override
   Widget build(BuildContext context) {
@@ -252,15 +279,23 @@ class _TopPortion extends StatelessWidget {
             child: Stack(
               fit: StackFit.expand,
               children: [
-                Container(
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    shape: BoxShape.circle,
-                    image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: AssetImage('assets/images/estu_logo.png'),
-                    ),
-                  ),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(75),
+                  child: courseImg == ''
+                      ? ColorFiltered(
+                          colorFilter: const ColorFilter.mode(
+                            Colors.grey,
+                            BlendMode.saturation,
+                          ),
+                          child: Image.asset(
+                            'assets/images/estu_logo.png',
+                            fit: BoxFit.fitHeight,
+                          ),
+                        )
+                      : Image.network(
+                          courseImg,
+                          fit: BoxFit.fitHeight,
+                        ),
                 ),
               ],
             ),

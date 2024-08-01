@@ -15,7 +15,6 @@ class FirebaseUserRepo implements UserRepository {
       : _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance;
 
   @override
-  // TODO: implement user
   Stream<MyUser?> get user {
     return _firebaseAuth.authStateChanges().flatMap((firebaseUser) async* {
       if (firebaseUser == null) {
