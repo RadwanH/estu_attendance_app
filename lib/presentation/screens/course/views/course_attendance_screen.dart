@@ -1,9 +1,13 @@
+import 'package:course_repository/course_repository.dart';
 import 'package:flutter/material.dart';
 
-class CourseWeeksGridScreen extends StatelessWidget {
-  const CourseWeeksGridScreen({
+class CourseAttendanceScreen extends StatelessWidget {
+  const CourseAttendanceScreen(
+    this.course, {
     super.key,
   });
+
+  final Course course;
 
   @override
   Widget build(BuildContext context) {

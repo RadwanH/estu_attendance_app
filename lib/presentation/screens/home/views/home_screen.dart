@@ -1,13 +1,16 @@
 import 'dart:ui';
 
-import 'package:estu_attendance_app/screens/auth/blocs/sign_in_bloc/sign_in_bloc.dart';
-import 'package:estu_attendance_app/screens/auth/views/welcome_screen.dart';
+import 'package:course_repository/course_repository.dart';
+import 'package:estu_attendance_app/components/my_main_container_card.dart';
+import 'package:estu_attendance_app/presentation/screens/auth/blocs/sign_in_bloc/sign_in_bloc.dart';
+import 'package:estu_attendance_app/presentation/screens/auth/views/welcome_screen.dart';
+import 'package:estu_attendance_app/presentation/screens/course/blocs/get_course_bloc/get_course_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../../../components/section_title.dart';
-import '../../../constants.dart';
+import '../../../../components/section_title.dart';
+import '../../../../constants/constants.dart';
 import '../../course/views/course_details_screen.dart';
 import '../../course/views/courses_grid_screen.dart';
 
@@ -91,26 +94,14 @@ class HomeScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: defaultPadding * 2),
-                SectionTitle(
-                  title: "Courses You Give",
-                  press: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const CoursesGridScreen(),
-                    ),
-                  ),
+                MyMainContainerCard(
+                  title: 'Discover Your Courses',
+                  onTap: () {
+                    print('Discover Your Courses clicked');
+                    Navigator.of(context).pushNamed('/courses');
+                  },
                 ),
-                const SizedBox(height: defaultPadding),
-                const SizedBox(height: 20),
-                SectionTitle(
-                  title: "Courses You Take",
-                  press: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const CoursesGridScreen(),
-                    ),
-                  ),
-                ),
+                const SizedBox(height: defaultPadding * 2),
               ],
             ),
           ),
