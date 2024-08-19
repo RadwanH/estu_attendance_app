@@ -13,8 +13,10 @@ dependencies:
     path: ../user_repository
     
   # # equatable: ^2.0.5
-  # firebase_auth: ^4.16.0
+  firebase_auth: ^4.16.0
   cloud_firestore: ^4.9.2
+  uuid: ^4.4.2
+  firebase_storage: ^11.7.7
   # # firebase_storage: ^11.6.0
   # rxdart: ^0.27.7
   # # path: ^1.8.3

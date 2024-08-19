@@ -26,7 +26,7 @@ class CourseDetailsScreen extends StatelessWidget {
           Expanded(
             flex: 1,
             child: _TopPortion(
-              courseImg: course.imageUrl,
+              courseImg: course.imageUrl!,
             ),
           ),
           Expanded(
@@ -54,108 +54,133 @@ class _BottomPortion extends StatelessWidget {
       child: Column(
         children: [
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8.0),
-            child: Text(
-              textAlign: TextAlign.center,
-              course.name,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 30,
-              ),
-            ),
-          ),
-          const SizedBox(height: 16),
-          Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: Wrap(
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(bottom: 6),
-                  decoration: BoxDecoration(
-                    color: Colors.green.withOpacity(0.3),
-                    borderRadius: BorderRadius.circular(30),
+            child: Container(
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(30),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    blurRadius: 5,
+                    offset: const Offset(3, 3),
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8,
-                      vertical: 4,
-                    ),
-                    child: Text(
-                      '#${course.code}',
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
+                ],
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 16,
+                ),
+                child: Wrap(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        bottom: 8.0,
+                      ),
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: Text(
+                          textAlign: TextAlign.center,
+                          course.name,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 30,
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Container(
-                  margin: const EdgeInsets.only(bottom: 6),
-                  decoration: BoxDecoration(
-                    color: Colors.yellow.withOpacity(0.3),
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8,
-                      vertical: 4,
-                    ),
-                    child: Text(
-                      '🏛️ ${course.classroom}',
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
+                    const SizedBox(height: 16),
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 6),
+                      decoration: BoxDecoration(
+                        color: Colors.green.withOpacity(0.3),
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 4,
+                        ),
+                        child: Text(
+                          '#${course.code}',
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Container(
-                  margin: const EdgeInsets.only(bottom: 6),
-                  decoration: BoxDecoration(
-                    color: Colors.yellow.withOpacity(0.3),
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8,
-                      vertical: 4,
-                    ),
-                    child: Text(
-                      '📅 ${course.weeks} Weeks',
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
+                    const SizedBox(width: 10),
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 6),
+                      decoration: BoxDecoration(
+                        color: Colors.yellow.withOpacity(0.3),
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 4,
+                        ),
+                        child: Text(
+                          '🏛️ ${course.classroom}',
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.red,
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8,
-                      vertical: 4,
-                    ),
-                    child: Text(
-                      '🕒 ${course.hours} Hrs/Week',
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
+                    const SizedBox(width: 10),
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 6),
+                      decoration: BoxDecoration(
+                        color: Colors.yellow.withOpacity(0.3),
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 4,
+                        ),
+                        child: Text(
+                          '📅 ${course.weeks} Weeks',
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          ),
+                        ),
                       ),
                     ),
-                  ),
+                    const SizedBox(width: 10),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.orange,
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 4,
+                        ),
+                        child: Text(
+                          '🕒 ${course.hours} Hrs/Week',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
           const SizedBox(height: 16),
@@ -236,17 +261,9 @@ class _BottomPortion extends StatelessWidget {
                           onPressed: () {
                             Navigator.pushNamed(
                               context,
-                              '/course_attendance_screen',
+                              '/attendances_screen',
                               arguments: course,
                             );
-
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //     builder: (context) =>
-                            //         const CourseWeeksGridScreen(),
-                            //   ),
-                            // );
                           },
                           icon: const Icon(
                             Icons.arrow_forward_ios_rounded,
@@ -278,15 +295,15 @@ class _TopPortion extends StatelessWidget {
         Container(
           height: double.infinity,
           margin: const EdgeInsets.only(bottom: 50),
-          decoration: const BoxDecoration(
+          decoration: BoxDecoration(
               gradient: LinearGradient(
                   begin: Alignment.bottomCenter,
                   end: Alignment.topCenter,
                   colors: [
-                    Color.fromARGB(255, 186, 15, 6),
-                    Colors.transparent,
+                    Colors.white,
+                    Theme.of(context).colorScheme.surface,
                   ]),
-              borderRadius: BorderRadius.only(
+              borderRadius: const BorderRadius.only(
                 bottomLeft: Radius.circular(30),
                 bottomRight: Radius.circular(30),
               )),

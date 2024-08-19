@@ -2,15 +2,18 @@ import 'dart:ui';
 
 import 'package:course_repository/course_repository.dart';
 import 'package:estu_attendance_app/components/my_main_container_card.dart';
-import 'package:estu_attendance_app/presentation/screens/auth/blocs/sign_in_bloc/sign_in_bloc.dart';
-import 'package:estu_attendance_app/presentation/screens/auth/views/welcome_screen.dart';
-import 'package:estu_attendance_app/presentation/screens/course/blocs/get_course_bloc/get_course_bloc.dart';
+import 'package:estu_attendance_app/presentation/features/attendances/blocs/current_attendance_cubit/current_attendance_cubit.dart';
+import 'package:estu_attendance_app/presentation/features/attendances/views/active_attendance_screen.dart';
+import 'package:estu_attendance_app/presentation/features/auth/blocs/sign_in_bloc/sign_in_bloc.dart';
+import 'package:estu_attendance_app/presentation/features/auth/views/welcome_screen.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../../components/section_title.dart';
 import '../../../../constants/constants.dart';
+import '../../attendances/views/active_attendance.dart';
 import '../../course/views/course_details_screen.dart';
 import '../../course/views/courses_grid_screen.dart';
 
@@ -97,9 +100,23 @@ class HomeScreen extends StatelessWidget {
                 MyMainContainerCard(
                   title: 'Discover Your Courses',
                   onTap: () {
-                    print('Discover Your Courses clicked');
                     Navigator.of(context).pushNamed('/courses');
                   },
+                ),
+                const SizedBox(height: defaultPadding * 2),
+                BlocProvider(
+                  create: (context) => CurrentAttendanceCubit()
+                    ..startAttendanceSession(
+                      Attendance(
+                        id: '12',
+                        lecturerId: '12',
+                        courseId: '11',
+                        week: 2,
+                        timer: 60,
+                        forHours: [1, 2, 3],
+                      ),
+                    ),
+                  child: ActiveAttendance(),
                 ),
                 const SizedBox(height: defaultPadding * 2),
               ],

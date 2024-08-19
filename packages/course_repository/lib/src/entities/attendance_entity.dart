@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:user_repository/user_repository.dart';
 
 class AttendanceEntity {
@@ -7,8 +8,8 @@ class AttendanceEntity {
   final int week;
   final DateTime? date;
   final int timer;
-  final String generatedCode;
-  final List<MyUser> attendees;
+  final List<String>? attendeesIds;
+  final List<int> forHours;
 
   AttendanceEntity({
     required this.id,
@@ -17,8 +18,8 @@ class AttendanceEntity {
     required this.week,
     DateTime? date,
     required this.timer,
-    required this.generatedCode,
-    required this.attendees,
+    this.attendeesIds,
+    required this.forHours,
   }) : this.date = date ?? DateTime.now();
 
   static final empty = AttendanceEntity(
@@ -28,8 +29,7 @@ class AttendanceEntity {
     week: 0,
     date: DateTime.now(),
     timer: 0,
-    generatedCode: '',
-    attendees: [],
+    forHours: [],
   );
 
   Map<String, Object?> toDocument() {
@@ -40,8 +40,8 @@ class AttendanceEntity {
       'week': week,
       'date': date,
       'timer': timer,
-      'generatedCode': generatedCode,
-      'attendees': attendees.map((e) => e.toEntity()).toList(),
+      'attendeesIds': attendeesIds,
+      'forHours': forHours,
     };
   }
 
@@ -51,11 +51,15 @@ class AttendanceEntity {
       lecturerId: doc['lecturerId'] as String,
       courseId: doc['courseId'] as String,
       week: doc['week'] as int,
-      date: doc['date'] as DateTime,
+      date: doc['date'] != null ? (doc['date'] as Timestamp).toDate() : null,
       timer: doc['timer'] as int,
-      generatedCode: doc['generatedCode'] as String,
-      attendees:
-          (doc['attendees'] as List).map((e) => MyUser.fromEntity(e)).toList(),
+      attendeesIds: (doc['attendeesIds'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          [],
+      forHours:
+          (doc['forHours'] as List<dynamic>?)?.map((e) => e as int).toList() ??
+              [],
     );
   }
 }

@@ -1,10 +1,53 @@
 import 'dart:developer';
+import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:course_repository/course_repository.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:uuid/uuid.dart';
 
 class FirebaseCourseRepo implements CourseRepo {
   final courseCollection = FirebaseFirestore.instance.collection('courses');
+  final FirebaseStorage _storage = FirebaseStorage.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  @override
+  Future<List<Course>> getStudentCourses(String studentId) async {
+    try {
+      final snapshot = await courseCollection
+          .where('studentsIds', arrayContains: studentId)
+          .get();
+
+      log('Firestore query snapshot: ${snapshot.docs.map((doc) => doc.data()).toList()}');
+
+      final courses = snapshot.docs
+          .map(
+              (doc) => Course.fromEntity(CourseEntity.fromDocument(doc.data())))
+          .toList();
+
+      log('Parsed courses: $courses');
+
+      return courses;
+    } catch (e) {
+      log(e.toString());
+      rethrow;
+    }
+  }
+  // Future<List<Course>> getStudentCourses(String studentId) {
+  //   try {
+  //     return courseCollection
+  //         .where('studentsIds', arrayContains: studentId)
+  //         .get()
+  //         .then((snapshot) => snapshot.docs
+  //             .map((doc) =>
+  //                 Course.fromEntity(CourseEntity.fromDocument(doc.data())))
+  //             .toList());
+  //   } catch (e) {
+  //     log(e.toString());
+  //     rethrow;
+  //   }
+  // }
 
   @override
   Future<List<Course>> getCourses() async {
@@ -59,6 +102,31 @@ class FirebaseCourseRepo implements CourseRepo {
           .doc(course.courseId)
           .update(course.toEntity().toDocument())
           .then((_) => course);
+    } catch (e) {
+      log(e.toString());
+      rethrow;
+    }
+  }
+
+  @override
+  Future<String> uploadImage(Uint8List file, String childName) async {
+    try {
+      // Creating a unique id for the image
+      final imgId = const Uuid().v1();
+
+      //creating location to our firebase storage
+      Reference ref = _storage
+          .ref()
+          .child(childName)
+          .child(_auth.currentUser!.uid)
+          .child(imgId);
+
+      UploadTask uploadTask =
+          ref.putData(file, SettableMetadata(contentType: 'image/jpeg'));
+
+      TaskSnapshot snap = await uploadTask;
+      String downloadUrl = await snap.ref.getDownloadURL();
+      return downloadUrl;
     } catch (e) {
       log(e.toString());
       rethrow;

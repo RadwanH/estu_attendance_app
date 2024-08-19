@@ -1,15 +1,17 @@
 import 'package:course_repository/course_repository.dart';
 import 'package:estu_attendance_app/blocs/authentication_bloc/authentication_bloc.dart';
-import 'package:estu_attendance_app/presentation/screens/course/views/course_attendance_screen.dart';
+import 'package:estu_attendance_app/presentation/features/attendances/blocs/get_attendances_bloc/get_attendances_bloc.dart';
+import 'package:estu_attendance_app/presentation/features/course/blocs/get_my_courses_cubit/get_my_courses_cubit.dart';
+import 'package:estu_attendance_app/presentation/features/course/views/course_attendance_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../screens/auth/blocs/sign_in_bloc/sign_in_bloc.dart';
-import '../screens/auth/views/welcome_screen.dart';
-import '../screens/course/blocs/get_course_bloc/get_course_bloc.dart';
-import '../screens/course/views/course_details_screen.dart';
-import '../screens/course/views/courses_grid_screen.dart';
-import '../screens/home/views/home_screen.dart';
+import '../features/attendances/views/attendance_screen.dart';
+import '../features/auth/blocs/sign_in_bloc/sign_in_bloc.dart';
+import '../features/auth/views/welcome_screen.dart';
+import '../features/course/views/course_details_screen.dart';
+import '../features/course/views/courses_grid_screen.dart';
+import '../features/home/views/home_screen.dart';
 
 class AppRouter {
   Route? onGenerateRoute(RouteSettings settings) {
@@ -25,12 +27,6 @@ class AppRouter {
                       create: (context) => SignInBloc(
                           context.read<AuthenticationBloc>().userRepository),
                     ),
-                    // BlocProvider(
-                    //   create: (context) => GetCourseBloc(FirebaseCourseRepo())
-                    //     ..add(
-                    //       GetCourse(),
-                    //     ),
-                    // )
                   ],
                   child: const HomeScreen(),
                 );
@@ -43,8 +39,9 @@ class AppRouter {
       case '/courses':
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
-                  create: (context) =>
-                      GetCourseBloc(FirebaseCourseRepo())..add(GetCourse()),
+                  create: (context) => GetMyCoursesCubit(FirebaseCourseRepo())
+                    ..getMyCourses('1nEQVlUXh4b4xN9CC634yZObzlH2'),
+                  // GetCourseBloc(FirebaseCourseRepo())..add(GetCourse()),
                   child: const CoursesGridScreen(),
                 ));
 
@@ -55,10 +52,26 @@ class AppRouter {
             course,
           ),
         );
-      case '/course_attendance_screen':
+      case '/attendances_screen':
         final course = settings.arguments as Course;
         return MaterialPageRoute(
-          builder: (_) => CourseAttendanceScreen(course),
+          builder: (context) => MultiBlocProvider(
+            providers: [
+              BlocProvider.value(
+                value: context.read<AuthenticationBloc>(),
+              ),
+              BlocProvider(
+                create: (context) =>
+                    GetAttendancesBloc(FirebaseAttendanceRepo())
+                      ..add(
+                        GetAttendances(courseId: course!.courseId),
+                      ),
+              ),
+            ],
+            child: AttendancesScreen(
+              course: course,
+            ),
+          ),
         );
 
       default:

@@ -1,4 +1,5 @@
-import 'package:course_repository/src/models/models.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:uuid/uuid.dart';
 
 import '../entities/entities.dart';
 
@@ -10,7 +11,8 @@ class Course {
   int hours;
   String classroom;
   String lecturerId;
-  // List<Attendance>? attendances;
+  List<String>? attendancesIds;
+  List<String>? studentsIds;
   int weeks;
 
   Course({
@@ -21,12 +23,13 @@ class Course {
     required this.hours,
     required this.classroom,
     required this.lecturerId,
-    // this.attendances,
+    this.attendancesIds,
+    this.studentsIds,
     this.weeks = 14,
   });
 
   static final empty = Course(
-    courseId: '',
+    courseId: const Uuid().v1(),
     name: '',
     code: '',
     hours: 0,
@@ -44,8 +47,9 @@ class Course {
       hours: hours,
       classroom: classroom,
       lecturerId: lecturerId,
-      // attendances: attendances,
       weeks: weeks,
+      attendancesIds: attendancesIds,
+      
     );
   }
 
@@ -58,13 +62,49 @@ class Course {
       hours: entity.hours,
       classroom: entity.classroom,
       lecturerId: entity.lecturerId,
-      // attendances: entity.attendances,
+      attendancesIds: entity.attendancesIds,
       weeks: entity.weeks,
     );
   }
 
   @override
   String toString() {
-    return 'Course { courseId: $courseId, name: $name, code: $code, imageUrl: $imageUrl, hours: $hours, classroom: $classroom, lecturerId: $lecturerId, attendances: attendances, weeks: $weeks }';
+    return '''Course {
+     courseId: $courseId, 
+     name: $name, 
+     code: $code, 
+     imageUrl: $imageUrl, 
+     hours: $hours, 
+     classroom: $classroom, 
+     lecturerId: $lecturerId, 
+     attendancesIds: $attendancesIds, 
+     weeks: $weeks }''';
+  }
+
+  
+ 
+
+  Course copyWith({
+    String? courseId,
+    String? name,
+    String? code,
+    String? imageUrl,
+    int? hours,
+    String? classroom,
+    String? lecturerId,
+    List<String>? attendancesIds,
+    int? weeks,
+  }) {
+    return Course(
+      courseId: courseId ?? this.courseId,
+      name: name ?? this.name,
+      code: code ?? this.code,
+      imageUrl: imageUrl ?? this.imageUrl,
+      hours: hours ?? this.hours,
+      classroom: classroom ?? this.classroom,
+      lecturerId: lecturerId ?? this.lecturerId,
+      attendancesIds: attendancesIds ?? this.attendancesIds,
+      weeks: weeks ?? this.weeks,
+    );
   }
 }

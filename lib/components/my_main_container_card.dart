@@ -18,15 +18,13 @@ class MyMainContainerCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      height: 240, // Set to a height that makes sense for your design
+      height: 240,
       child: Stack(
         children: [
           Padding(
-            padding: const EdgeInsets.only(
-                bottom: 5, top: 30), // Replace bottom positioning
+            padding: const EdgeInsets.only(bottom: 5, top: 30),
             child: Align(
-              alignment:
-                  Alignment.bottomCenter, // Replace left and right positioning
+              alignment: Alignment.bottomCenter,
               child: Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 20,
@@ -71,10 +69,8 @@ class MyMainContainerCard extends StatelessWidget {
           Positioned(
             height: 100,
             width: 100,
-
             top: 5,
             right: 5,
-            // Replace bottom and right positioning
             child: ClipRRect(
               child: Container(
                 decoration: BoxDecoration(

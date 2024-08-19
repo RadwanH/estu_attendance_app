@@ -1,7 +1,10 @@
 import 'package:course_repository/course_repository.dart';
-import 'package:estu_attendance_app/presentation/screens/course/blocs/get_course_bloc/get_course_bloc.dart';
+import 'package:estu_attendance_app/blocs/get_user_cubit/get_user_cubit.dart';
+
+import 'package:estu_attendance_app/presentation/features/course/blocs/get_my_courses_cubit/get_my_courses_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:user_repository/user_repository.dart';
 
 import 'course_card.dart';
 import 'course_details_screen.dart';
@@ -26,11 +29,11 @@ class CoursesGridScreen extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: BlocBuilder<GetCourseBloc, GetCourseState>(
+        child: BlocBuilder<GetMyCoursesCubit, GetMyCoursesState>(
           builder: (context, state) {
-            if (state is GetCourseSuccess) {
+            if (state is GetMyCoursesSuccess) {
               return CourseGrid(courses: state.courses);
-            } else if (state is GetCourseLoading) {
+            } else if (state is GetMyCoursesLoading) {
               return const Center(
                 child: CircularProgressIndicator(),
               );
@@ -59,13 +62,17 @@ class CourseGrid extends StatelessWidget {
       itemCount: courses.length,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 10,
+        crossAxisSpacing: 16,
+        mainAxisSpacing: 16,
         childAspectRatio: 9 / 16,
       ),
       itemBuilder: (context, index) {
         final course = courses[index];
-        return CourseCard(course: course);
+        return BlocProvider<GetUserCubit>(
+          create: (context) =>
+              GetUserCubit(FirebaseUserRepo())..getUserById(course.lecturerId),
+          child: CourseCard(course: course),
+        );
       },
     );
   }

@@ -1,6 +1,3 @@
-import 'package:course_repository/src/entities/entities.dart';
-import 'package:course_repository/src/models/models.dart';
-
 class CourseEntity {
   final String courseId;
   final String name;
@@ -9,7 +6,8 @@ class CourseEntity {
   final int hours;
   final String classroom;
   final String lecturerId;
-  // final List<Attendance>? attendances;
+  final List<String>? attendancesIds;
+  final List<String>? studentsIds;
   final int weeks;
 
   CourseEntity({
@@ -20,7 +18,8 @@ class CourseEntity {
     required this.hours,
     required this.classroom,
     required this.lecturerId,
-    // this.attendances,
+    this.attendancesIds,
+    this.studentsIds,
     this.weeks = 14,
   });
 
@@ -43,7 +42,8 @@ class CourseEntity {
       'hours': hours,
       'classroom': classroom,
       'lecturerId': lecturerId,
-      // 'attendances': attendances?.map((e) => e.toEntity()).toList(),
+      'attendancesIds': attendancesIds,
+      'studentsIds': studentsIds,
       'weeks': weeks,
     };
   }
@@ -57,10 +57,10 @@ class CourseEntity {
       hours: doc['hours'] as int,
       classroom: doc['classroom'] as String,
       lecturerId: doc['lecturerId'] as String,
-      // attendances: (doc['attendances'] as List?)
-      //     ?.map((e) => Attendance.fromEntity(
-      //         AttendanceEntity.fromDocument(e as Map<String, Object?>)))
-      //     .toList(),
+      attendancesIds:
+          (doc['attendancesIds'] as List?)?.map((e) => e as String).toList(),
+      studentsIds:
+          (doc['studentsIds'] as List?)?.map((e) => e as String).toList(),
       weeks: doc['weeks'] as int,
     );
   }
