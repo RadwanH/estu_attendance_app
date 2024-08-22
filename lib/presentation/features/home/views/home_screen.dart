@@ -1,19 +1,18 @@
 import 'dart:ui';
 
 import 'package:course_repository/course_repository.dart';
-import 'package:estu_attendance_app/blocs/authentication_bloc/authentication_bloc.dart';
-import 'package:estu_attendance_app/components/my_main_container_card.dart';
-import 'package:estu_attendance_app/presentation/features/attendances/blocs/current_attendance_cubit/current_attendance_cubit.dart';
-import 'package:estu_attendance_app/presentation/features/attendances/views/active_attendanceOLD.dart';
-import 'package:estu_attendance_app/presentation/features/attendances/views/active_attendance_screen.dart';
-import 'package:estu_attendance_app/presentation/features/auth/blocs/sign_in_bloc/sign_in_bloc.dart';
-import 'package:estu_attendance_app/presentation/features/auth/views/welcome_screen.dart';
-import 'package:estu_attendance_app/presentation/features/course/blocs/get_my_courses_cubit/get_my_courses_cubit.dart';
+import '../../../../blocs/authentication_bloc/authentication_bloc.dart';
+import '../../../../components/my_main_container_card.dart';
+import '../../attendances/blocs/current_attendance_cubit/current_attendance_cubit.dart';
+import '../../attendances/views/active_attendanceOLD.dart';
+import '../../attendances/views/active_attendance_screen.dart';
+import '../../auth/blocs/sign_in_bloc/sign_in_bloc.dart';
+import '../../auth/views/welcome_screen.dart';
+import '../../course/blocs/get_my_courses_cubit/get_my_courses_cubit.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
 import '../../../../components/section_title.dart';
 import '../../../../constants/constants.dart';
 import '../../attendances/blocs/active_attendances_cubit/active_attendances_cubit.dart';
@@ -70,8 +69,8 @@ class HomeScreen extends StatelessWidget {
                   ),
                   background: ImageFiltered(
                     imageFilter: ImageFilter.blur(sigmaX: 1.0, sigmaY: 1.0),
-                    child: Image.network(
-                      "https://www.eskisehir.edu.tr/Uploads/www/Icerik/Buyuk/154d41bc-770a-4061-8b55-339ff30c8efb-5bd9cbc435d98.jpeg",
+                    child: Image.asset(
+                      "assets/images/estu_background.jpg",
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -118,13 +117,7 @@ class HomeScreen extends StatelessWidget {
                     builder: (context, state) {
                       if (state is GetMyCoursesLoading) {
                         return Center(
-                          child: Text(
-                            'Loading...',
-                            style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black),
-                          ),
+                          child: Container(),
                         );
                       } else if (state is GetMyCoursesSuccess) {
                         final courseIds = state.courses

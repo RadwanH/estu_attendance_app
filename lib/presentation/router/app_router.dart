@@ -1,8 +1,8 @@
 import 'package:course_repository/course_repository.dart';
-import 'package:estu_attendance_app/blocs/authentication_bloc/authentication_bloc.dart';
-import 'package:estu_attendance_app/presentation/features/attendances/blocs/get_attendances_bloc/get_attendances_bloc.dart';
-import 'package:estu_attendance_app/presentation/features/course/blocs/get_my_courses_cubit/get_my_courses_cubit.dart';
-import 'package:estu_attendance_app/presentation/features/course/views/course_attendance_screen.dart';
+import '../../blocs/authentication_bloc/authentication_bloc.dart';
+import '../features/attendances/blocs/get_attendances_bloc/get_attendances_bloc.dart';
+import '../features/course/blocs/get_my_courses_cubit/get_my_courses_cubit.dart';
+import '../features/course/views/course_attendance_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

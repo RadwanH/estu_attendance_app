@@ -1,7 +1,7 @@
 import 'package:course_repository/course_repository.dart';
-import 'package:estu_attendance_app/blocs/get_user_cubit/get_user_cubit.dart';
+import '../../../../blocs/get_user_cubit/get_user_cubit.dart';
 
-import 'package:estu_attendance_app/presentation/features/course/blocs/get_my_courses_cubit/get_my_courses_cubit.dart';
+import '../blocs/get_my_courses_cubit/get_my_courses_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:user_repository/user_repository.dart';

@@ -1,5 +1,5 @@
 import 'package:course_repository/course_repository.dart';
-import 'package:estu_attendance_app/components/my_macro_card.dart';
+import '../../../../../components/my_macro_card.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 

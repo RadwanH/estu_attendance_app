@@ -1,5 +1,5 @@
 import 'package:course_repository/course_repository.dart';
-import 'package:estu_attendance_app/blocs/authentication_bloc/authentication_bloc.dart';
+import '../../../../blocs/authentication_bloc/authentication_bloc.dart';
 import '../blocs/get_attendances_bloc/get_attendances_bloc.dart';
 
 import 'package:flutter/material.dart';

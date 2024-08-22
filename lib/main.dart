@@ -1,4 +1,4 @@
-import 'package:estu_attendance_app/app.dart';
+import 'app.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

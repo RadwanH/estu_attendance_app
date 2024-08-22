@@ -1,4 +1,4 @@
-import 'package:estu_attendance_app/components/my_dropdown_menu.dart';
+import '../../../../components/my_dropdown_menu.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:user_repository/user_repository.dart';
 import 'package:flutter/cupertino.dart';

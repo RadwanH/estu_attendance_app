@@ -1,5 +1,5 @@
-import 'package:estu_attendance_app/components/my_round_button.dart';
-import 'package:estu_attendance_app/constants/app_assets.dart';
+import 'my_round_button.dart';
+import '../constants/app_assets.dart';
 import 'package:flutter/material.dart';
 
 import '../constants/app_colors.dart';

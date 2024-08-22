@@ -1,6 +1,6 @@
 import 'package:course_repository/course_repository.dart';
-import 'package:estu_attendance_app/presentation/features/attendances/blocs/current_attendance_cubit/current_attendance_cubit.dart';
-import 'package:estu_attendance_app/presentation/features/attendances/views/active_attendance_screen.dart';
+import '../blocs/current_attendance_cubit/current_attendance_cubit.dart';
+import 'active_attendance_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
