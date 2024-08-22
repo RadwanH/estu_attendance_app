@@ -5,7 +5,13 @@ import 'components/atttendance_card.dart';
 
 class AttendancesGrid extends StatelessWidget {
   final List<Attendance> attendances;
-  const AttendancesGrid({super.key, required this.attendances});
+  final String currentUserId;
+
+  const AttendancesGrid({
+    super.key,
+    required this.attendances,
+    required this.currentUserId,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -24,8 +30,8 @@ class AttendancesGrid extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 16.0),
                 child: attendances.isNotEmpty
                     ? Wrap(
-                        spacing: 16,
-                        runSpacing: 16,
+                        spacing: 8,
+                        runSpacing: 8,
                         children: attendances
                             .map(
                               (attendance) => ConstrainedBox(
@@ -34,7 +40,14 @@ class AttendancesGrid extends StatelessWidget {
                                       MediaQuery.of(context).size.width / 2 -
                                           32,
                                 ),
-                                child: AttendanceCard(attendance: attendance),
+                                child: AttendanceCard(
+                                  attendance: attendance,
+                                  color: attendance.attendeesIds!
+                                          .contains(currentUserId)
+                                      ? Colors.greenAccent
+                                      : Colors
+                                          .redAccent, // Determine the color based on attendeesIds
+                                ),
                               ),
                             )
                             .toList(),

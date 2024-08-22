@@ -1,11 +1,14 @@
 import 'dart:ui';
 
 import 'package:course_repository/course_repository.dart';
+import 'package:estu_attendance_app/blocs/authentication_bloc/authentication_bloc.dart';
 import 'package:estu_attendance_app/components/my_main_container_card.dart';
 import 'package:estu_attendance_app/presentation/features/attendances/blocs/current_attendance_cubit/current_attendance_cubit.dart';
+import 'package:estu_attendance_app/presentation/features/attendances/views/active_attendanceOLD.dart';
 import 'package:estu_attendance_app/presentation/features/attendances/views/active_attendance_screen.dart';
 import 'package:estu_attendance_app/presentation/features/auth/blocs/sign_in_bloc/sign_in_bloc.dart';
 import 'package:estu_attendance_app/presentation/features/auth/views/welcome_screen.dart';
+import 'package:estu_attendance_app/presentation/features/course/blocs/get_my_courses_cubit/get_my_courses_cubit.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,6 +16,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../../components/section_title.dart';
 import '../../../../constants/constants.dart';
+import '../../attendances/blocs/active_attendances_cubit/active_attendances_cubit.dart';
 import '../../attendances/views/active_attendance.dart';
 import '../../course/views/course_details_screen.dart';
 import '../../course/views/courses_grid_screen.dart';
@@ -92,34 +96,58 @@ class HomeScreen extends StatelessWidget {
               ),
             ];
           },
-          body: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: defaultPadding * 2),
-                MyMainContainerCard(
-                  title: 'Discover Your Courses',
-                  onTap: () {
-                    Navigator.of(context).pushNamed('/courses');
-                  },
-                ),
-                const SizedBox(height: defaultPadding * 2),
-                BlocProvider(
-                  create: (context) => CurrentAttendanceCubit()
-                    ..startAttendanceSession(
-                      Attendance(
-                        id: '12',
-                        lecturerId: '12',
-                        courseId: '11',
-                        week: 2,
-                        timer: 60,
-                        forHours: [1, 2, 3],
-                      ),
-                    ),
-                  child: ActiveAttendance(),
-                ),
-                const SizedBox(height: defaultPadding * 2),
-              ],
+          body: RefreshIndicator(
+            onRefresh: () async {
+              context.read<GetMyCoursesCubit>().getMyCourses(
+                    context.read<AuthenticationBloc>().state.user!.userId,
+                  );
+            },
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: defaultPadding * 2),
+                  MyMainContainerCard(
+                    title: 'Discover Your Courses',
+                    onTap: () {
+                      Navigator.of(context).pushNamed('/courses');
+                    },
+                  ),
+                  const SizedBox(height: defaultPadding * 2),
+                  BlocBuilder<GetMyCoursesCubit, GetMyCoursesState>(
+                    builder: (context, state) {
+                      if (state is GetMyCoursesLoading) {
+                        return Center(
+                          child: Text(
+                            'Loading...',
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black),
+                          ),
+                        );
+                      } else if (state is GetMyCoursesSuccess) {
+                        final courseIds = state.courses
+                            .map((course) => course.courseId)
+                            .toList();
+
+                        return BlocProvider(
+                          create: (context) => ActiveAttendancesCubit(
+                            FirebaseAttendanceRepo(),
+                          )..getActiveAttendances(courseIds),
+                          child: ActiveAttendance(
+                            courses: state.courses,
+                          ),
+                        );
+                      } else if (state is GetMyCoursesFailure) {
+                        return const Text('Failed to load courses');
+                      }
+                      return Container();
+                    },
+                  ),
+                  const SizedBox(height: defaultPadding * 2),
+                ],
+              ),
             ),
           ),
         ),

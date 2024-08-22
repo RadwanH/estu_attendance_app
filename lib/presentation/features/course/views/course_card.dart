@@ -47,7 +47,6 @@ class CourseCard extends StatelessWidget {
               ),
             ),
             Expanded(
-              // Wraps the content to allow it to expand and fit within the available space
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
@@ -60,7 +59,7 @@ class CourseCard extends StatelessWidget {
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
-                          fontSize: 18,
+                          fontSize: 15,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -84,6 +83,7 @@ class CourseCard extends StatelessWidget {
                               style: const TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold,
+                                fontSize: 12,
                               ),
                             ),
                           ),
@@ -104,6 +104,7 @@ class CourseCard extends StatelessWidget {
                               style: const TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold,
+                                fontSize: 12,
                               ),
                             ),
                           ),

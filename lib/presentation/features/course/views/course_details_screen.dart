@@ -86,7 +86,7 @@ class _BottomPortion extends StatelessWidget {
                           course.name,
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
-                            fontSize: 30,
+                            fontSize: 20,
                           ),
                         ),
                       ),
@@ -108,7 +108,7 @@ class _BottomPortion extends StatelessWidget {
                           style: const TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
-                            fontSize: 20,
+                            fontSize: 14,
                           ),
                         ),
                       ),
@@ -130,7 +130,7 @@ class _BottomPortion extends StatelessWidget {
                           style: const TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
-                            fontSize: 20,
+                            fontSize: 14,
                           ),
                         ),
                       ),
@@ -152,7 +152,7 @@ class _BottomPortion extends StatelessWidget {
                           style: const TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
-                            fontSize: 20,
+                            fontSize: 14,
                           ),
                         ),
                       ),
@@ -173,7 +173,7 @@ class _BottomPortion extends StatelessWidget {
                           style: const TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
-                            fontSize: 20,
+                            fontSize: 14,
                           ),
                         ),
                       ),
@@ -214,14 +214,14 @@ class _BottomPortion extends StatelessWidget {
                           style: TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
-                            fontSize: 20,
+                            fontSize: 14,
                           ),
                         ),
                         Text(
                           'Dr. John Doe',
                           style: TextStyle(
                             color: Colors.black,
-                            fontSize: 20,
+                            fontSize: 14,
                           ),
                         ),
                       ],
@@ -234,14 +234,14 @@ class _BottomPortion extends StatelessWidget {
                           style: TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
-                            fontSize: 20,
+                            fontSize: 14,
                           ),
                         ),
                         Text(
                           ' 0%',
                           style: TextStyle(
                             color: Colors.black,
-                            fontSize: 20,
+                            fontSize: 14,
                           ),
                         ),
                       ],
@@ -254,7 +254,7 @@ class _BottomPortion extends StatelessWidget {
                           style: TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
-                            fontSize: 20,
+                            fontSize: 14,
                           ),
                         ),
                         IconButton(

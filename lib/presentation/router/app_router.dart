@@ -27,6 +27,17 @@ class AppRouter {
                       create: (context) => SignInBloc(
                           context.read<AuthenticationBloc>().userRepository),
                     ),
+                    BlocProvider(
+                      create: (context) =>
+                          GetMyCoursesCubit(FirebaseCourseRepo())
+                            ..getMyCourses(
+                              context
+                                  .read<AuthenticationBloc>()
+                                  .state
+                                  .user!
+                                  .userId,
+                            ),
+                    ),
                   ],
                   child: const HomeScreen(),
                 );
@@ -40,8 +51,9 @@ class AppRouter {
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
                   create: (context) => GetMyCoursesCubit(FirebaseCourseRepo())
-                    ..getMyCourses('1nEQVlUXh4b4xN9CC634yZObzlH2'),
-                  // GetCourseBloc(FirebaseCourseRepo())..add(GetCourse()),
+                    ..getMyCourses(
+                      context.read<AuthenticationBloc>().state.user!.userId,
+                    ),
                   child: const CoursesGridScreen(),
                 ));
 

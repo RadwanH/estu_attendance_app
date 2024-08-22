@@ -28,7 +28,7 @@ class AttendanceCard extends StatelessWidget {
       ),
       shadowColor: Colors.black12,
       child: Container(
-        width: 150,
+        width: 155,
         padding: const EdgeInsets.all(20.0),
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -54,19 +54,19 @@ class AttendanceCard extends StatelessWidget {
               children: [
                 Text(
                   formattedDate,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: 18,
-                    color: Colors.blue.shade700,
+                    color: Color(0xFF1C1C1C),
                   ),
                 ),
                 const SizedBox(height: 8),
                 Text(
                   formattedTime,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
-                    color: Colors.blue.shade600,
+                    color: Color(0xFF1C1C1C),
                   ),
                 ),
               ],
@@ -77,7 +77,7 @@ class AttendanceCard extends StatelessWidget {
                 MyMacroCard(
                   backgroundColor: Colors.blueAccent,
                   icon: Icons.calendar_today,
-                  text: ': ${attendance.week}',
+                  text: 'week: ${attendance.week}',
                   style: const TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w600,
@@ -87,7 +87,7 @@ class AttendanceCard extends StatelessWidget {
                 MyMacroCard(
                   backgroundColor: Colors.redAccent,
                   icon: Icons.timer,
-                  text: ': ${attendance.timer}',
+                  text: '${attendance.timer}min',
                   style: const TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w600,

@@ -1,9 +1,9 @@
 import 'package:course_repository/course_repository.dart';
+import 'package:estu_attendance_app/blocs/authentication_bloc/authentication_bloc.dart';
 import '../blocs/get_attendances_bloc/get_attendances_bloc.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'attendances_grid.dart';
 
@@ -26,16 +26,13 @@ class AttendancesScreen extends StatelessWidget {
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
           child: Center(
             child: ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 800),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(
-                    height: 20,
-                  ),
                   Flexible(
                     fit: FlexFit.tight,
                     child: Container(
@@ -53,7 +50,13 @@ class AttendancesScreen extends StatelessWidget {
                               );
                             }
                             return AttendancesGrid(
-                                attendances: state.attendances);
+                              attendances: state.attendances,
+                              currentUserId: context
+                                  .read<AuthenticationBloc>()
+                                  .state
+                                  .user!
+                                  .userId,
+                            );
                           } else if (state is GetAttendancesLoading) {
                             return const Center(
                               child: CircularProgressIndicator(),

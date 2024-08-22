@@ -11,11 +11,18 @@ class FirebaseAttendanceRepo implements AttendanceRepo {
       FirebaseFirestore.instance.collection('attendances');
 
   @override
-  Future<Attendance> addAttendance(Attendance courseAttendance) {
+  Future<Attendance> addAttendance(Attendance courseAttendance) async {
     try {
-      return attendanceCollection
-          .add(courseAttendance.toEntity().toDocument())
-          .then((doc) => courseAttendance);
+      final docRef = await attendanceCollection
+          .add(courseAttendance.toEntity().toDocument());
+
+      final generatedId = docRef.id;
+
+      // Update the Firestore document with the generated ID
+      await docRef.update({'id': generatedId});
+
+      // Return the attendance with the generated ID
+      return courseAttendance.copyWith(id: generatedId);
     } catch (e) {
       log(e.toString());
       rethrow;
@@ -57,14 +64,24 @@ class FirebaseAttendanceRepo implements AttendanceRepo {
   }
 
   @override
-  Future<Attendance> updateAttendance(Attendance courseAttendance) {
+  Future<Attendance> updateAttendance(Attendance courseAttendance) async {
     try {
-      return attendanceCollection
-          .doc(courseAttendance.id)
-          .update(courseAttendance.toEntity().toDocument())
-          .then((_) => courseAttendance);
-    } catch (e) {
-      log(e.toString());
+      final docRef = attendanceCollection.doc(courseAttendance.id);
+      final data = courseAttendance.toEntity().toDocument();
+
+      log('Updating document at ${docRef.path} with data: $data');
+
+      final docSnapshot = await docRef.get();
+      if (!docSnapshot.exists) {
+        log('Attempting to update document with ID: ${courseAttendance.id}');
+        throw Exception('Document does not exist.');
+      }
+
+      await docRef.update(data);
+      return courseAttendance;
+    } catch (e, stackTrace) {
+      log('Error updating attendance: ${e.toString()}');
+      log('Stack trace: ${stackTrace.toString()}');
       rethrow;
     }
   }
